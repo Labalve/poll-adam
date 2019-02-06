@@ -5,6 +5,11 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
+{% if question.audio_file != null %}
+<audio controls>
+    <source src="{{ question.audio_file.url }}" type="audio/mpeg">
+</audio>
+{% endif %}
 <form action="{% url 'answer' question.id person_id %}" method="post">
     <div class="form-group">
         {% csrf_token %}

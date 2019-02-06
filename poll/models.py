@@ -17,6 +17,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     open_question = models.BooleanField()
     question_set = models.ForeignKey(QuestionSet, blank=True, null=True, on_delete=models.SET_NULL)
+    audio_file = models.FileField(upload_to='audio', blank=True, null=True)
 
     def __str__(self):
         return self.question_text
@@ -26,6 +27,7 @@ class Question(models.Model):
 
     def get_next_question(self):
         return self.question_set.question_set.all()[self.which_set_element() + 1]
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
