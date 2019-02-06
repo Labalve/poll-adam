@@ -9,7 +9,8 @@ class QuestionSet(models.Model):
 
     def which_set_element(self, question):
         for index, s in enumerate(self.question_set.all()):
-            return index
+            if s == question:
+                return index
 
 
 class Question(models.Model):

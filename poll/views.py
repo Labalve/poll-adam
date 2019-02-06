@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 import random
 import string
-from django.template import loader
 from .models import QuestionSet, Question, Answer, Choice
 
 
@@ -37,14 +36,14 @@ def results(request, question_id):
 
 def answer(request, question_id, person_id):
     question = get_object_or_404(Question, pk=question_id)
-    next_question = question.get_next_question()
     if question.open_question:
         Answer.create_open(person_id, request.POST['answer'], question)
     else:
         choice = get_object_or_404(Choice, pk=request.POST['choice'])
         Answer.create_closed(person_id, choice, question)
-    if next_question.id == question_id:
+    if question.id == len(question.question_set.question_set.all()):
         return HttpResponseRedirect(reverse('finish', args=()))
+    next_question = question.get_next_question()
     return HttpResponseRedirect(reverse('detail', args=(next_question.id, person_id,)))
 
 
