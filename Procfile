@@ -1,1 +1,1 @@
-web: gunicorn poll-adam.wsgi:application --log-file -
+web: gunicorn adam.wsgi:application --log-file -
